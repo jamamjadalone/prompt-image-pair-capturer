@@ -1,0 +1,189 @@
+/**
+ * style.css - Scoped styles for on-page indicator pill and toast notifications
+ * All class names use the `__pic-` namespace to avoid conflicts with host page styles.
+ */
+
+/* Container for all Prompt & Image Capturer on-page UI */
+#__pic_host_container {
+  position: fixed;
+  z-index: 2147483647;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  pointer-events: none; /* individual elements enable pointer-events */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+#__pic_host_container * {
+  box-sizing: border-box;
+}
+
+/* Floating Armed Indicator Pill */
+.__pic-floating-pill {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #1e293b;
+  color: #f8fafc;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid #3b82f6;
+  max-width: 440px;
+  animation: __pic-slide-down 0.25s cubic-bezier(0.16, 1, 0.3, 1), __pic-pulse-border 2s infinite ease-in-out;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.__pic-pill-dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+  animation: __pic-blink 1.5s infinite ease-in-out;
+}
+
+.__pic-pill-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.__pic-pill-title {
+  font-weight: 600;
+  font-size: 12.5px;
+  color: #93c5fd;
+  white-space: nowrap;
+}
+
+.__pic-pill-snippet {
+  font-size: 11.5px;
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+
+.__pic-pill-close {
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.__pic-pill-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Toast Notification Area */
+.__pic-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  z-index: 2147483647;
+}
+
+.__pic-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 500;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: __pic-toast-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 420px;
+}
+
+.__pic-toast.__pic-toast-exit {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+}
+
+.__pic-toast-success {
+  background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.__pic-toast-warning {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+}
+
+.__pic-toast-error {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+}
+
+.__pic-toast-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Keyframe Animations */
+@keyframes __pic-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes __pic-pulse-border {
+  0% {
+    border-color: #3b82f6;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    border-color: #60a5fa;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(96, 165, 250, 0.4);
+  }
+  100% {
+    border-color: #3b82f6;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.4);
+  }
+}
+
+@keyframes __pic-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+@keyframes __pic-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

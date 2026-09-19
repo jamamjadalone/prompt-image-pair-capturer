@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt & Image Capturer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Header Bar -->
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="logo-icon">✨</div>
+      <div class="logo-text">
+        <h1>Prompt Capturer</h1>
+        <span class="count-badge" id="countBadge">0 pairs</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="btnExport" class="btn btn-primary" title="Export all records as JSON for desktop app">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Export All
+      </button>
+      <button id="btnClear" class="btn btn-danger-outline" title="Clear all saved records">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Search / Filter Bar -->
+  <div class="search-section" id="searchSection">
+    <div class="search-box">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="search-icon">
+        <circle cx="11" cy="11" r="8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Search prompts...">
+      <button id="searchClearBtn" class="search-clear-btn" style="display: none;">✕</button>
+    </div>
+  </div>
+
+  <!-- Main Content / Record List -->
+  <main class="main-content">
+    <div id="recordsList" class="records-list">
+      <!-- Dynamically generated items -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <div class="empty-icon">🎨</div>
+      <h3>No prompt-image pairs yet</h3>
+      <p class="empty-guide">
+        <strong>1. Copy</strong> the prompt text from the page (Ctrl+C).<br>
+        <strong>2. Click</strong> the generated image to pair & save.<br>
+        <strong>3. Export</strong> all pairs to JSON anytime!
+      </p>
+    </div>
+  </main>
+
+  <!-- Full-Size Preview & Details Modal -->
+  <div id="previewModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Details</h3>
+        <button id="modalCloseBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-image-container">
+          <img id="modalFullImage" src="" alt="Full Preview" />
+        </div>
+        <div class="modal-prompt-box">
+          <div class="modal-prompt-label">
+            <span>Captured Prompt</span>
+            <button id="modalCopyPromptBtn" class="btn-copy-sm">Copy</button>
+          </div>
+          <div id="modalFullPrompt" class="modal-prompt-text"></div>
+        </div>
+        <div class="modal-meta-row">
+          <span id="modalTimestamp" class="modal-meta"></span>
+          <a id="modalSourceLink" class="modal-meta modal-link" target="_blank" rel="noopener">Open Source Page ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clear All Confirmation Modal -->
+  <div id="confirmModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-header">
+        <h3 class="modal-title">Clear All Records?</h3>
+      </div>
+      <div class="modal-body">
+        <p style="color: #64748b; font-size: 13px; margin: 0 0 16px 0;">
+          This will permanently delete all captured prompt & image pairs from extension storage. This action cannot be undone.
+        </p>
+        <div class="modal-actions">
+          <button id="btnCancelClear" class="btn btn-secondary">Cancel</button>
+          <button id="btnConfirmClear" class="btn btn-danger">Yes, Clear All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
