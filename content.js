@@ -27,8 +27,8 @@
  *   [IDLE] + (User clicks image element) ──► [TOAST WARNING: "No prompt copied yet"] ──► [IDLE]
  */
 
-(function () {
-  'use strict';
+(() => {
+  
 
   // Prevent multiple injections in the same frame/page
   if (window.__promptImageCapturerInitialized) {
@@ -97,7 +97,7 @@
       const closeBtn = document.createElement('button');
       closeBtn.className = '__pic-pill-close';
       closeBtn.title = 'Cancel / Disarm';
-      closeBtn.innerHTML = '✕';
+      closeBtn.textContent = '✕';
       closeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         e.preventDefault();

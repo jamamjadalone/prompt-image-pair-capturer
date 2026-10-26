@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
    * Renders the list of records based on current filter.
    */
   function renderRecords(recordsToRender) {
-    recordsList.innerHTML = '';
+    recordsList.textContent = '';
 
     if (!recordsToRender || recordsToRender.length === 0) {
       recordsList.style.display = 'none';
@@ -93,14 +93,28 @@ document.addEventListener('DOMContentLoaded', async () => {
       timeSpan.textContent = formatTimestamp(record.timestamp);
 
       const deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
       deleteBtn.className = 'btn-delete-card';
       deleteBtn.title = 'Delete this record';
-      deleteBtn.innerHTML = `
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="3 6 5 6 21 6"/>
-          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-        </svg>
-      `;
+      deleteBtn.setAttribute('aria-label', 'Delete record');
+
+      const delSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      delSvg.setAttribute('width', '13');
+      delSvg.setAttribute('height', '13');
+      delSvg.setAttribute('viewBox', '0 0 24 24');
+      delSvg.setAttribute('fill', 'none');
+      delSvg.setAttribute('stroke', 'currentColor');
+      delSvg.setAttribute('stroke-width', '2');
+      delSvg.setAttribute('aria-hidden', 'true');
+
+      const delPoly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      delPoly.setAttribute('points', '3 6 5 6 21 6');
+      const delPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      delPath.setAttribute('d', 'M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2');
+
+      delSvg.appendChild(delPoly);
+      delSvg.appendChild(delPath);
+      deleteBtn.appendChild(delSvg);
 
       deleteBtn.addEventListener('click', async (e) => {
         e.stopPropagation(); // prevent opening preview modal
